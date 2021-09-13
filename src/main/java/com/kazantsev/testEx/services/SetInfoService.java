@@ -11,7 +11,12 @@ public class SetInfoService {
 
     @PostMapping("/set")
     public String setInfo(@RequestBody Info info) {
-        TestDataBase.DataBase.put(info.getKey(), info.getContent());
+        if (TestDataBase.DataBase.containsKey(info.getKey())) {
+            TestDataBase.DataBase.replace(info.getKey(), info.getContent());
+        } else {
+            TestDataBase.DataBase.put(info.getKey(), info.getContent());
+        }
+        System.out.println(TestDataBase.DataBase.size());
         return "cool";
     }
 }
